@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Models\Contracts\HasName;
 
-class Company extends Model
+class Company extends Model implements HasName
 {
     /** @use HasFactory<\Database\Factories\CompanyFactory> */
     use HasFactory, HasUuids;
@@ -22,5 +23,15 @@ class Company extends Model
         'primary_color',
         'is_active',
     ];
+
+    public function getFilamentName(): string
+    {
+        return $this->name;
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 
 }
